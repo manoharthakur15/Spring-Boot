@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,11 +24,12 @@ public class SecurityConfig {
 		}).authorizeHttpRequests((requests) -> {
 			try {
 //				requests.requestMatchers("/*").authenticated().anyRequest().authenticated();
-				requests.requestMatchers(HttpMethod.GET, "/*").hasRole("ADMIN");
+				requests.requestMatchers(HttpMethod.GET, "/getproducts").hasRole("ADMIN");
+				requests.requestMatchers(HttpMethod.POST, "/saveproduct").hasRole("ADMIN");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}).csrf(c -> c.disable()).httpBasic(a -> a.disable());
+		}).csrf(c -> c.disable()).httpBasic(Customizer.withDefaults());
 		http1.addFilterAt(new CustomFilter(authManager), BasicAuthenticationFilter.class);
 		return http.build();
 	}

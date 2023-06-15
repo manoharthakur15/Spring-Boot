@@ -58,6 +58,7 @@ public class CustomFilter extends OncePerRequestFilter {
 			String[] userAndPassword = credentials.split(":");
 			Authentication auth = new UsernamePasswordAuthenticationToken(userAndPassword[0], userAndPassword[1]);
 			Authentication auth1 = authenticationManager.authenticate(auth);
+			System.out.println("Hii "+ userAndPassword[0] + userAndPassword[1]);
 
 			SecurityContext context = this.securityContextHolderStrategy.createEmptyContext();
 			context.setAuthentication(auth1);

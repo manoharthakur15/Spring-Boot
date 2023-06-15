@@ -39,12 +39,6 @@ public class MainController {
 		return productService.addUser(userInfo);
 	}
 
-	@GetMapping("/well")
-	@ResponseBody
-	public String welcome() {
-		return "this is response";
-	}
-
 	@PostMapping("/saveproduct")
 	public ResponseEntity<Product> createProduct(@RequestBody ProductModel productModel) {
 		return new ResponseEntity<Product>(productService.createProduct(productModel), HttpStatus.OK);
